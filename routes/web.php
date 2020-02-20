@@ -11,12 +11,15 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->to('/home');
 });
 
-Route::get('/redirect', 'SocialController@redirect');
-Route::get('/callback', 'SocialController@callback');
+Route::get('/redirect', 'SocialAuthController@redirect');
+Route::get('/callback', 'SocialAuthController@callback');
 
 Auth::routes();
 

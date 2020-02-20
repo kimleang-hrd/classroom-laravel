@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use Laravel\Socialite\Facades\Socialite;
 use App\Services\SocialFacebookAccountService;
 
-class SocialController extends Controller
+class SocialAuthController extends Controller
 {
     public function redirect()
     {  
@@ -19,7 +19,7 @@ class SocialController extends Controller
     {
         $user = $service->createOrGetUser(Socialite::driver('facebook')->stateless()->user());
         auth()->login($user);
-        return redirect()->to('/');
+        return redirect()->to('/home');
     }
 
 }

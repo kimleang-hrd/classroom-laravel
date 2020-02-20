@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\SocialAccount;
 use App\Http\Controllers\Controller;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Laravel\Socialite\Contracts\User as ProviderUser;
 
 class LoginController extends Controller
 {

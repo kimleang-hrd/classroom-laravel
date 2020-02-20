@@ -10,6 +10,8 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $table = 'cr_users';
+
     /**
      * The attributes that are mass assignable.
      *

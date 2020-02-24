@@ -14,9 +14,9 @@ class CreateClassroomsTable extends Migration
     public function up()
     {
         Schema::create('classrooms', function (Blueprint $table) {
-            $table->increments('id');
             $table->unsignedInteger('user_id')->nullable(false);
             $table->unsignedInteger('class_id')->nullable(false);
+            $table->primary(['user_id', 'class_id']);
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

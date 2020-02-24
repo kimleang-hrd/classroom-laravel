@@ -23,4 +23,14 @@ Route::get('/callback', 'SocialAuthController@callback');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware('auth')->group(function () {
+
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::prefix('class')->group(function () {
+        Route::get('/{id}', 'Classroom\ClassroomController@class');
+        Route::post('/create', 'Classroom\ClassroomController@createClass');
+        Route::post('/join', 'Classroom\ClassroomController@joinClass');
+    });
+
+});

@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique()->nullable(true);
             $table->string('password');
+            $table->string('image')->nullable(false);
             $table->rememberToken();
             $table->timestamps();
         });

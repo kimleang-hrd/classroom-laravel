@@ -11,10 +11,12 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/jquery.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -42,6 +44,15 @@
                         @guest
                         @else
                             <li class="nav-item dropdown">
+                                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="material-icons">add</i>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#joinClass">ចូលថ្នាក់</a>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#createClass">បង្កើតថ្នាក់</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
@@ -61,6 +72,60 @@
                         @endguest
                     </ul>
                 </div>
+
+                <!-- Modal -->
+                <div class="modal fade bd-example-modal-sm" id="joinClass" tabindex="-1" role="dialog" aria-labelledby="joinClassLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="joinClassLabel">ចូលថ្នាក់</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="{{ url('/class/join') }}" method="POST">
+                                @csrf
+                                <div class="modal-body">
+                                    <p>សួរគ្រូរបស់អ្នកសម្រាប់លេខកូដថ្នាក់ បន្ទាប់មកបញ្ចូលវានៅទីនេះ។</p>
+                                    <input type="text" name="code" class="form-control form-control-sm" placeholder="លេខកូដថ្នាក់">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">បិទ</button>
+                                    <button type="submit" class="btn btn-primary">រក្សារទុក</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Create Class Modal -->
+                <div class="modal fade bd-example-modal-sm" id="createClass" tabindex="-1" role="dialog" aria-labelledby="createClassLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createClassLabel">បង្កើតថ្នាក់</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="{{ url('/class/create') }}" method="POST">
+                                @csrf
+                                <div class="modal-body">
+                                    <input type="text" name="className" class="form-control form-control-sm" placeholder="ឈ្មោះថ្នាក់ (ត្រូវការចាំបាច់)">
+                                    <br>
+                                    <input type="text" name="classSubject" class="form-control form-control-sm" placeholder="ប្រធានបទ">
+                                    <br>
+                                    <input type="text" name="classDesc" class="form-control form-control-sm" placeholder="ព័ត៏មានថ្នាក់">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">បិទ</button>
+                                    <button type="submit" class="btn btn-primary">រក្សារទុក</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </nav>
 

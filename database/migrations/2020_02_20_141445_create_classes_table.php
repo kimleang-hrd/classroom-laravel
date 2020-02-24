@@ -16,6 +16,7 @@ class CreateClassesTable extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('class_name')->nullable(false);
+            $table->string('class_subject')->nullable(false);
             $table->string('class_description')->nullable(true);
             $table->string('class_image')->nullable(true);
             $table->string('referral_code')->nullable(false)->unique();

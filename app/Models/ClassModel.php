@@ -12,5 +12,10 @@ class ClassModel extends Model
         "class_name", "class_subject", "class_description", 
         "class_image", "referral_code", "owner_id"
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User', 'classrooms', 'class_id', 'user_id');
+    }
     
 }

@@ -34,11 +34,29 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        
+                    </ul>
 
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <div>
+                                <a class="nav-link" href="/class/{{$class_id}}">Steam</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div>
+                                <a class="nav-link" href="/classwork/{{$class_id}}">Classwork</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div>
+                                <a class="nav-link" href="/people/{{$class_id}}">People</a>
+                            </div>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <ul class="navbar-nav ml-auto" style="margin-left: 0">
                         <!-- Authentication Links -->
                         @guest
                         @else

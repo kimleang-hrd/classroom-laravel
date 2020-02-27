@@ -31,6 +31,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}', 'Classroom\ClassroomController@class');
         Route::post('/create', 'Classroom\ClassroomController@createClass');
         Route::post('/join', 'Classroom\ClassroomController@joinClass');
+        Route::get('/delete/{id}', 'Classroom\ClassroomController@deleteClass');
+        Route::get('/leave/{id}', 'Classroom\ClassroomController@leaveClass');
+        Route::post('/update/{id}', 'Classroom\ClassroomController@updateClass');
+    });
+
+    Route::prefix('people')->group(function () {
+        Route::get('/{id}', 'PeopleController@index');
+    });
+
+    Route::prefix('classwork')->group(function () {
+        Route::get('/{id}', 'Classroom\ClassworkController@index');
+        Route::post('/create', 'Classroom\ClassworkController@create');
     });
 
 });

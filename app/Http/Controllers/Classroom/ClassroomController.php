@@ -17,17 +17,32 @@ class ClassroomController extends Controller
     {
         $class = ClassModel::find($id);
         if ($class) {
-            return view('classroom.class', [
-                'class_name' => ''.$class->class_name,
-                'class_subject' => ''.$class->class_subject,
-                'class_description' => ''.$class->class_description,
-                'class_image' => ''.$class->class_image,
-                'referral_code' => ''.$class->referral_code,
-                'owner_id' => ''.$class->owner_id,
-            ]);
+            if ($class->owner_id == Auth::user()->id) {
+                return self::viewClass($class);
+            }
+            $user = Auth::user();
+            foreach ($user->classrooms as $classroom) {
+                if ($classroom->id == $id) {
+                    return self::viewClass($class);
+                }
+            }
+            return view('errs.404');
         } else {
-            return view('classroom.class');
+            return view('errs.404');
         }
+    }
+
+    private function viewClass($class)
+    {
+        return view('classroom.class', [
+            'class_id' => ''.$class->id,
+            'class_name' => ''.$class->class_name,
+            'class_subject' => ''.$class->class_subject,
+            'class_description' => ''.$class->class_description,
+            'class_image' => ''.$class->class_image,
+            'referral_code' => ''.$class->referral_code,
+            'owner_id' => ''.$class->owner_id,
+        ]);
     }
     
     public function createClass(Request $request) 
@@ -73,10 +88,44 @@ class ClassroomController extends Controller
                     }
                 }
             } else {
-
+                // TODO: if it's your own class, you cannot join
             }
         }
     }
 
+    public function deleteClass($classId) 
+    {
+        $class = ClassModel::find($classId);
+        if ($class->owner_id == Auth::user()->id) {
+            $class->delete();
+            return redirect('/');
+        } else {
+            return view('errs.404');
+        }
+    }
+
+    public function updateClass($classId, Request $request) 
+    {
+        $class = ClassModel::find($classId);
+        if ($class->owner_id == Auth::user()->id) {
+            $class->class_name = $request->className;
+            $class->class_subject = $request->classSubject;
+            $class->class_description = $request->classDesc;
+            $class->save();
+        } else {
+            return view('errs.404');
+        }
+    }
+
+    public function leaveClass($classId) 
+    {
+        $class = Classroom::where('class_id', $classId)->first();
+        if ($class->user_id == Auth::user()->id) {
+            Classroom::where('class_id', $classId)->delete();
+            return redirect('/');
+        } else {
+            return view('errs.404');
+        }
+    }
 
 }

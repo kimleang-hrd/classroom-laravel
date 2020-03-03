@@ -8,6 +8,7 @@ use App\Models\Classroom;
 use App\Models\ClassModel;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
+use App\Models\JoinClassRequest;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -35,8 +36,9 @@ class HomeController extends Controller
         foreach ($user->classrooms as $classroom) {
             $classroom->count = Classroom::where('class_id', $classroom->id)->count();
             self::formatDateTime($classroom);
-            $ownerImage = User::find($classroom->owner_id)->first()->image;
+            $ownerImage = User::find($classroom->owner_id)->image;
             $classroom->ownerImage = $ownerImage;
+            $classroom->requests = null;
             $classrooms[] = $classroom;
         }
 
@@ -45,6 +47,14 @@ class HomeController extends Controller
             $classroom->count = Classroom::where('class_id', $classroom->id)->count();
             self::formatDateTime($classroom);
             $classroom->ownerImage = Auth::user()->image;
+            $requests = JoinClassRequest::where('class_id', $classroom->id)->get();
+            $userRequests = [];
+            foreach ($requests as $request) {
+                $userRequest = User::find($request->user_id);
+                $userRequest->userDescription = $request->description;
+                $userRequests[] = $userRequest;
+            }
+            $classroom->requests = $userRequests;
             $classrooms[] = $classroom;
         }
         return view('home', ['classrooms' => $classrooms]);

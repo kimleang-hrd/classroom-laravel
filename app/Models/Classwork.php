@@ -9,7 +9,7 @@ class Classwork extends Model
     protected $table = "classworks";
 
     protected $fillable = [
-        "title", "description", "link", "file", "class_id", "user_id"
+        "title", "description", "link", "file", "class_id", "user_id", "parent_id"
     ];
 
 }

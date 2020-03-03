@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClassworksTable extends Migration
+class JoinClassRequest extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,21 @@ class CreateClassworksTable extends Migration
      */
     public function up()
     {
-        Schema::create('classworks', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title')->nullable(false);
+        Schema::create('join_class_request', function (Blueprint $table) {
+            $table->unsignedInteger('user_id')->nullable(false);
+            $table->unsignedInteger('class_id')->nullable(false);
+            $table->primary(['user_id', 'class_id']);
+            $table->unsignedInteger('owner_id')->nullable(false);
             $table->string('description')->nullable(true);
-            $table->string('link')->nullable(true);
-            $table->string('file')->nullable(true);
-            $table->unsignedInteger('parent_id')->nullable(true);
-            $table->unsignedInteger('class_id');
-            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
             $table->foreign('class_id')
                 ->references('id')
                 ->on('classes')
                 ->onDelete('cascade');
-            $table->foreign('user_id')
+            $table->foreign('owner_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
@@ -41,6 +42,6 @@ class CreateClassworksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classworks');
+        Schema::dropIfExists('join_class_request');
     }
 }

@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Classroom;
 
+use MomentPHP\MomentPHP;
 use App\Models\Classroom;
+use App\Models\Classwork;
 use App\Models\ClassModel;
 use Illuminate\Http\Request;
+use InvalidArgumentException;
+use App\Models\JoinClassRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +38,9 @@ class ClassroomController extends Controller
 
     private function viewClass($class)
     {
-        return view('classroom.class', [
+        return view('classroom.classwork', [
+            'class' => $class,
+            'classworks' => $class->classworks,
             'class_id' => ''.$class->id,
             'class_name' => ''.$class->class_name,
             'class_subject' => ''.$class->class_subject,
@@ -58,6 +64,7 @@ class ClassroomController extends Controller
         $class->referral_code = ''.$referralCode;
         $class->owner_id = ''.$ownerId;
 
+
         try {
             $class->save();
         } catch (QueryException $e) {
@@ -68,6 +75,8 @@ class ClassroomController extends Controller
                 $class->save();
             }
         }
+        $class->classworks = [];
+        return redirect()->to('/home');
     }
 
     public function joinClass(Request $request) 
@@ -76,9 +85,11 @@ class ClassroomController extends Controller
         $yourId = Auth::user()->id;
         if ($class) {
             if ($yourId != $class->owner_id) {
-                $classroom = new Classroom();
+                $classroom = new JoinClassRequest();
                 $classroom->user_id = $yourId;
                 $classroom->class_id = $class->id;
+                $classroom->description = $request->description;
+                $classroom->owner_id = $class->owner_id;
                 try {
                     $classroom->save();
                 } catch (QueryException $e) {
@@ -90,6 +101,44 @@ class ClassroomController extends Controller
             } else {
                 // TODO: if it's your own class, you cannot join
             }
+            $classworks = Classwork::where('class_id', $class->id)->get();
+            $classworkss = [];
+            foreach($classworks as $classwork) {
+                self::formatDateTime($classwork);
+                $classworkss[] = $classwork;
+            }
+            $class->classworks = $classworkss;
+            return redirect()->to('/home');
+        } else {
+            return redirect()->to('/home');
+        }
+    }
+
+    public function confirmStudents($studentId, $classId)
+    {   
+        DB::table('join_class_request')->where('user_id', $studentId)->where('class_id', $classId)->delete();
+
+        $classroom = new Classroom();
+        $classroom->user_id = $studentId;
+        $classroom->class_id = $classId;
+        $classroom->save();
+
+        return redirect()->to('/home');
+    }
+
+    public function rejectStudents($studentId, $classId)
+    {
+        DB::table('join_class_request')->where('user_id', $studentId)->where('class_id', $classId)->delete();
+        return redirect()->to('/home');
+    }
+
+    private function formatDateTime($classwork)
+    {
+        try {
+            $moment = new MomentPHP($classwork->created_at, 'Y-m-d H:i:s');
+            $classwork->createdAt = $moment->fromNow();
+        } catch (InvalidArgumentException $ex) {
+            $classwork->createdAt = "មិនច្បាស់";
         }
     }
 

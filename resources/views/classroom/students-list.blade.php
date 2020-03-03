@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-md-center">
         <div class="col-8" style="border-bottom: 1px solid black;">
-            <h1>Teachers</h1>
+            <h3>Teachers</h3>
         </div>
     </div>
 
@@ -29,7 +29,7 @@
 
     <div class="row justify-content-md-center" style="margin-top: 25px;">
         <div class="col-8" style="border-bottom: 1px solid black;">
-            <h1>Students</h1>
+            <h3>Students</h3>
         </div>
     </div>
 
@@ -50,10 +50,20 @@
                         </tr>
                     </tbody>
                 @empty
-                    <p>No Students</p>
+                    <pre></pre>
+                    <h3 style="text-align: center;">គ្មានសិស្ស</h3>
                 @endforelse
             </table>
         </div>
     </div>
+
+    @if ($class->owner_id == Auth::user()->id)
+        <div class="row justify-content-md-center" style="margin-top: 50px;">
+            <div class="col-8">
+                <h5 style="text-align: center;">ផ្តល់លេខកូដថ្នាក់អោយពួកគេ៖ {{$referral_code}}</h5>
+            </div>
+        </div>
+    @endif
+
 </div>
 @endsection

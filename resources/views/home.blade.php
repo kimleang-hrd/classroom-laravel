@@ -13,14 +13,15 @@
                                 <i class="material-icons">more_vert</i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" style="color: green;" href="#" data-toggle="modal" data-target="#classRequest{{$class->id}}">ការសំុចូល</a>
                                 <a class="dropdown-item" style="color: blue;" href="#" data-toggle="modal" data-target="#classUpdate{{$class->id}}">កែប្រែថ្នាក់</a>
                                 <a class="dropdown-item btnDelete" style="color: red;" href="#" data-toggle="modal" data-target="#class{{$class->id}}">លុបថ្នាក់</a>
                             </div>
-                            <a class="cards" href={{ url('/class/'.$class->id) }}>
+                            <a class="cards" href={{ url('/classwork/'.$class->id) }}>
                                 <img class="card-img-top" height="100px" src="https://www.gstatic.com/classroom/themes/img_coffee.jpg" alt="Card image cap">
                             </a>
                         </div>
-                        <a class="cards" href={{ url('/class/'.$class->id) }}>
+                        <a class="cards" href={{ url('/classwork/'.$class->id) }}>
                             <div class="card-body">
                                 <img id="profile" src={{ $class->ownerImage }} alt="Logo">
                                 <h5 class="card-title">{{ $class->class_name }}</h5>
@@ -31,6 +32,42 @@
                                 <p id="created_date" data='{{ $class->created_at }}' class="text-muted">បានបង្កើតពេល {{ $class->createdAt }}</p>
                             </div>
                         </a>    
+                    </div>
+                </div>
+                <div class="modal fade bd-example-modal-lg" id="classRequest{{$class->id}}" tabindex="-1" role="dialog" aria-labelledby="requestClassLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="requestClassLabel">ការសំុចូល</h5>
+                                <button type="button" class="close closeButton" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table width="100%">
+                                @forelse($class->requests as $request)
+                                    {{$request}}
+                                    <tr>
+                                        <td>
+                                            <img src={{$request->image}} alt="Request User Profile" width="24px" height="24px">
+                                            {{$request->name}}
+                                        </td>
+                                        <td>{{$request->email}}</td>
+                                        <td>{{$request->userDescription}}</td>
+                                        <td>
+                                            <a href="/class/confirm/{{$request->id}}/{{$class->id}}" class="btn btn-primary">យល់ព្រម</a>
+                                            <a href="/class/reject/{{$request->id}}/{{$class->id}}" class="btn btn-warning">បដិសេធ</a>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <p>no</p>
+                                @endforelse
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary closeButton" data-dismiss="modal">បិទ</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -47,8 +84,8 @@
                                 <p>ប្រសិនបើអ្នកលុបថ្នាក់នេះសិស្សរបស់អ្នកនឹងមិនអាចធ្វើកិច្ចការផ្ទះបានទៀតទេ។</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger closeButton" data-dismiss="modal">បិទ</button>
-                                <a href={{ url('/class/delete/'.$class->id) }} type="submit" class="btn btn-primary">លុបចោល</a>
+                                <button type="button" class="btn btn-secondary closeButton" data-dismiss="modal">បិទ</button>
+                                <a href={{ url('/class/delete/'.$class->id) }} type="submit" class="btn btn-danger">លុបចោល</a>
                             </div>
                         </div>
                     </div>
@@ -93,11 +130,11 @@
                                 <a class="dropdown-item" style="color: red;" href="#" data-toggle="modal" data-target="#leaveClass{{$class->id}}">ចាកចេញ</a>
                                 <a class="dropdown-item btnDelete" style="color: green;" href="#" data-toggle="modal" data-target="#reportAbuse">រាយការណ៍ការបំពាន</a>
                             </div>
-                            <a class="cards" href={{ url('/class/'.$class->id) }}>
+                            <a class="cards" href={{ url('/classwork/'.$class->id) }}>
                                 <img class="card-img-top" height="100px" src="https://www.gstatic.com/classroom/themes/img_coffee.jpg" alt="Card image cap">
                             </a>
                         </div>
-                        <a class="cards" href={{ url('/class/'.$class->id) }}>
+                        <a class="cards" href={{ url('/classwork/'.$class->id) }}>
                             <div class="card-body">
                                 <img id="profile" src={{ $class->ownerImage }} alt="Logo">
                                 <h5 class="card-title">{{ $class->class_name }}</h5>
@@ -124,15 +161,16 @@
                                 <p>ប្រសិនបើអ្នកលុបថ្នាក់នេះសិស្សរបស់អ្នកនឹងមិនអាចធ្វើកិច្ចការផ្ទះបានទៀតទេ។</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-danger closeButton" data-dismiss="modal">បិទ</button>
-                                <a href={{ url('/class/leave/'.$class->id) }} type="submit" class="btn btn-primary">លុបចោល</a>
+                                <button type="button" class="btn btn-secondary closeButton" data-dismiss="modal">បិទ</button>
+                                <a href={{ url('/class/leave/'.$class->id) }} type="submit" class="btn btn-danger">លុបចោល</a>
                             </div>
                         </div>
                     </div>
                 </div>
             @endif
         @empty
-            <p>No Class</p>
+            <pre></pre>
+            <h3 style="text-align: center;">គ្មានថ្នាក់</h3>
         @endforelse
     </div>
 

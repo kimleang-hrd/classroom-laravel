@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}', 'Classroom\ClassroomController@class');
         Route::post('/create', 'Classroom\ClassroomController@createClass');
         Route::post('/join', 'Classroom\ClassroomController@joinClass');
+        Route::get('/confirm/{studentId}/{classId}', 'Classroom\ClassroomController@confirmStudents');
+        Route::get('/reject/{studentId}/{classId}', 'Classroom\ClassroomController@rejectStudents');
         Route::get('/delete/{id}', 'Classroom\ClassroomController@deleteClass');
         Route::get('/leave/{id}', 'Classroom\ClassroomController@leaveClass');
         Route::post('/update/{id}', 'Classroom\ClassroomController@updateClass');
@@ -43,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('classwork')->group(function () {
         Route::get('/{id}', 'Classroom\ClassworkController@index');
         Route::post('/create', 'Classroom\ClassworkController@create');
+        Route::post('/submit', 'Classroom\ClassworkController@submit');
     });
 
 });

@@ -41,4 +41,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Models\ClassModel', 'classrooms', 'user_id', 'class_id');
     }
+
+    public function requests()
+    {
+        return $this->belongsToMany('App\Models\ClassModel', 'join_class_request', 'user_id', 'class_id');
+    }
 }

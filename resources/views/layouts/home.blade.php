@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>ថ្នាក់រៀន</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -25,7 +25,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    ថ្នាក់រៀន
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -40,17 +40,12 @@
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <div>
-                                <a class="nav-link" href="/class/{{$class_id}}">Steam</a>
+                                <a class="nav-link" href="/classwork/{{$class_id}}">ការងារក្នុងថ្នាក់</a>
                             </div>
                         </li>
                         <li class="nav-item">
                             <div>
-                                <a class="nav-link" href="/classwork/{{$class_id}}">Classwork</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <div>
-                                <a class="nav-link" href="/people/{{$class_id}}">People</a>
+                                <a class="nav-link" href="/people/{{$class_id}}">បញ្ជីរសិស្ស</a>
                             </div>
                         </li>
                     </ul>

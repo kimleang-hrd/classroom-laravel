@@ -26,6 +26,7 @@ class PeopleController extends Controller
     private function viewClass($class, $owner, $students)
     {
         return view('classroom/students-list', [
+            'class' => $class,
             'class_id' => ''.$class->id,
             'referral_code' => ''.$class->referral_code,
             'owner' => $owner,

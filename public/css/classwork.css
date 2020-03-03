@@ -1,0 +1,49 @@
+.row {
+    padding-top: 15px;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul li.classworks {
+    height: 50px;
+    border-bottom: 1px lightgray solid;
+}
+
+ul li.classworks:hover {
+    border: 1px gray solid;
+    cursor: pointer;
+}
+
+ul li.classworks:hover .more {
+    display: inline-block;
+}
+
+.more {
+    float: right;
+    display: none;
+}
+
+.more::after {
+    clear: both;
+}
+
+.posted_time {
+    float: right;
+    padding-right: 15px;
+}
+
+.posted_time::after{
+    clear: both;
+}
+
+.classworks-div {
+    padding-top: 15px;
+}
+
+.title {
+    padding-left: 15px;
+}

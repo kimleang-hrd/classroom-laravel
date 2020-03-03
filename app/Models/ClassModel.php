@@ -17,5 +17,10 @@ class ClassModel extends Model
     {
         return $this->belongsToMany('App\User', 'classrooms', 'class_id', 'user_id');
     }
+
+    public function requestedUsers()
+    {
+        return $this->belongsToMany('App\User', 'join_class_request', 'class_id', 'user_id');
+    }
     
 }

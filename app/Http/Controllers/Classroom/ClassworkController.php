@@ -8,6 +8,7 @@ use App\Models\ClassModel;
 use Illuminate\Http\Request;
 use InvalidArgumentException;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\QueryException;
 
@@ -21,6 +22,11 @@ class ClassworkController extends Controller
         $classworkss = [];
         foreach($classworks as $classwork) {
             self::formatDateTime($classwork);
+            $studentWorks = Classwork::where('class_id', $classId)->where('parent_id', $classwork->id)->get();
+            foreach($studentWorks as $work) {
+                $work->worker = User::find($work->user_id);
+            }
+            $classwork->student_works = $studentWorks;
             $classworkss[] = $classwork;
         }
         $class->classworks = $classworkss;

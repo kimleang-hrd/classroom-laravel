@@ -46,7 +46,6 @@
                             <div class="modal-body">
                                 <table width="100%">
                                 @forelse($class->requests as $request)
-                                    {{$request}}
                                     <tr>
                                         <td>
                                             <img src={{$request->image}} alt="Request User Profile" width="24px" height="24px">

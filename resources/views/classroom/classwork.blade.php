@@ -79,6 +79,23 @@
                                         @if($classwork->file)
                                             <a href="#" class="btn btn-outline-primary">{{$classwork->file}}</a>
                                         @endif
+                                        <pre></pre>
+                                        <table style="width: 100%; border-collapse: collapse;">
+                                            @forelse($classwork->student_works as $work)
+                                                <tr>
+                                                    <td>
+                                                        <img src={{$work->worker->image}} alt="Logo" width="24px" height="24px">
+                                                    </td>
+                                                    <td>{{$work->worker->name}}</td>
+                                                    <td>
+                                                        <a href="#" class="btn btn-outline-primary">{{$work->file}}</a>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <p>No Classworks</p>
+                                            @endforelse
+                                        </table>
+                                        
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">បិទ</button>

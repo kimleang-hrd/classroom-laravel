@@ -42,6 +42,7 @@ class HomeController extends Controller
             $classrooms[] = $classroom;
         }
 
+        // Class you have created
         $classes = ClassModel::where('owner_id', $user->id)->get();
         foreach ($classes as $classroom) {
             $classroom->count = Classroom::where('class_id', $classroom->id)->count();

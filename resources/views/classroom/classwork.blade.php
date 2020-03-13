@@ -92,10 +92,10 @@
                                                     </td>
                                                 </tr>
                                             @empty
-                                                <p>No Classworks</p>
+                                                <p></p>
                                             @endforelse
                                         </table>
-                                        
+
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">បិទ</button>
@@ -103,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-                    @else 
+                    @else
                         <div class="modal fade bd-example-modal-lg" id="classwork{{$classwork->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
@@ -162,7 +162,7 @@
                     @csrf
                     <input type="hidden" name="class_id" value={{$class_id}}>
                     <div class="modal-body">
-                        <div class="form-group">    
+                        <div class="form-group">
                             <label for="exampleFormControlInput1">ចំណងជើងការងារ</label>
                             <input id="exampleFormControlInput1" type="text" name="title" class="form-control form-control-sm" placeholder="ចំណងជើងការងារ (ត្រូវការចាំបាច់)">
                         </div>

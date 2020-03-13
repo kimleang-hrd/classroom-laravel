@@ -31,7 +31,7 @@
                             <div class="card-footer">
                                 <p id="created_date" data='{{ $class->created_at }}' class="text-muted">បានបង្កើតពេល {{ $class->createdAt }}</p>
                             </div>
-                        </a>    
+                        </a>
                     </div>
                 </div>
                 <div class="modal fade bd-example-modal-lg" id="classRequest{{$class->id}}" tabindex="-1" role="dialog" aria-labelledby="requestClassLabel" aria-hidden="true">
@@ -143,7 +143,7 @@
                             <div class="card-footer">
                                 <p id="created_date" data='{{ $class->created_at }}' class="text-muted">បានបង្កើតពេល {{ $class->createdAt }}</p>
                             </div>
-                        </a>    
+                        </a>
                     </div>
                 </div>
 
